@@ -4,9 +4,34 @@ using System.Data;
 using System.IO;
 
 
+using Zadanie1;
+using Zadanie2;
+using Zadanie3;
 
 
 
+class Zadania_all
+{
+    static void Main(string[] args)
+    {
+        Zadanie1.Program Zadanie1 = new Zadanie1.Program();
+        Zadanie2.Program Zadanie2 = new Zadanie2.Program();
+        Zadanie3.Program Zadanie3 = new Zadanie3.Program();
+        Console.WriteLine($"\n{nameof(Zadanie1)}");
+        Zadanie1.Zad1();
+        Console.WriteLine($"\n{nameof(Zadanie2)}");
+        Zadanie2.Zad2();
+        Console.WriteLine($"\n{nameof(Zadanie3)}");
+        Zadanie3.Zad3();
+    }
+}
+
+
+
+    /*Struktura aplikacji nie jest poprawna.
+    1. Brak wyszukiwania po fragmencie - szuka tylko po całym słowie. Brak wyszukiwania po dacie. Wyszukiwanie po słownie nie działa. Znajduje tylko pierwszą wiadomość.
+    2. Pętla dodaje cały czas te same elementy z list do słownika. Aplikacja się wysypuje bo klucz się powtarza.
+    3. LoggerKonsola wypisuje zawsze tą samą treść. LoggerPlik nie dzieli na pliki. Brak testu. Co jeśli plik już istnieje?*/
 
 
 

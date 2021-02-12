@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Wiadomosc
+namespace Zadanie1
+{
+    public class Wiadomosc
     {
         public string Tresc { get; set; }
         public DateTime Czas { get; set; }
@@ -20,49 +22,65 @@ public class Wiadomosc
     }
 
 
-    class Zadaniee1
+    class  Program
     {
-        static void Main(string[] args)
+        public void Zad1()
         {
-            DateTime date1 = new DateTime(2008, 6, 1, 7, 47, 0);
             Random rnd = new Random();
+            DateTime date1 = new DateTime(rnd.Next(1, 2020), rnd.Next(1,12), rnd.Next(1,20), rnd.Next(1,24), rnd.Next(0,60), rnd.Next(0,60));
             List<Wiadomosc> wiadomoscsi = new List<Wiadomosc>()
             {
-                new Wiadomosc("Wiadomosc1", date1.AddDays(rnd.Next(0, 10))),
-                new Wiadomosc("Wiadomosc2", date1.AddDays(rnd.Next(0, 10))),
-                new Wiadomosc("Wiadomosc3", date1.AddDays(rnd.Next(0, 10))),
-                new Wiadomosc("Wiadomosc4", date1.AddDays(rnd.Next(0, 10))),
-                new Wiadomosc("Wiadomosc5", date1.AddDays(rnd.Next(0, 10))),
-                new Wiadomosc("Wiadomosc6", date1.AddDays(rnd.Next(0, 10))),
-                new Wiadomosc("Wiadomosc7", date1.AddDays(rnd.Next(0, 10))),
-                new Wiadomosc("Wiadomosc8", date1.AddDays(rnd.Next(0, 10))),
-                new Wiadomosc("Wiadomosc9", date1.AddDays(rnd.Next(0, 10))),
-                new Wiadomosc("Wiadomosc10", date1.AddDays(rnd.Next(0, 10))),
+                new Wiadomosc("Wiadomosc1", new DateTime(rnd.Next(1, 2020), rnd.Next(1,12), rnd.Next(1,20), rnd.Next(1,24), rnd.Next(0,60), rnd.Next(0,60))),
+                new Wiadomosc("Wiadomosc2", new DateTime(rnd.Next(1, 2020), rnd.Next(1,12), rnd.Next(1,20), rnd.Next(1,24), rnd.Next(0,60), rnd.Next(0,60))),
+                new Wiadomosc("Wiadomosc3", new DateTime(rnd.Next(1, 2020), rnd.Next(1,12), rnd.Next(1,20), rnd.Next(1,24), rnd.Next(0,60), rnd.Next(0,60))),
+                new Wiadomosc("Wiadomosc4", new DateTime(rnd.Next(1, 2020), rnd.Next(1,12), rnd.Next(1,20), rnd.Next(1,24), rnd.Next(0,60), rnd.Next(0,60))),
+                new Wiadomosc("Wiadomosc5", new DateTime(rnd.Next(1, 2020), rnd.Next(1,12), rnd.Next(1,20), rnd.Next(1,24), rnd.Next(0,60), rnd.Next(0,60))),
+                new Wiadomosc("Wiadomosc6", new DateTime(rnd.Next(1, 2020), rnd.Next(1,12), rnd.Next(1,20), rnd.Next(1,24), rnd.Next(0,60), rnd.Next(0,60))),
+                new Wiadomosc("Wiadomosc7", new DateTime(rnd.Next(1, 2020), rnd.Next(1,12), rnd.Next(1,20), rnd.Next(1,24), rnd.Next(0,60), rnd.Next(0,60))),
+                new Wiadomosc("Wiadomosc8", new DateTime(rnd.Next(1, 2020), rnd.Next(1,12), rnd.Next(1,20), rnd.Next(1,24), rnd.Next(0,60), rnd.Next(0,60))),
+                new Wiadomosc("Wiadomosc9", new DateTime(rnd.Next(1, 2020), rnd.Next(1,12), rnd.Next(1,20), rnd.Next(1,24), rnd.Next(0,60), rnd.Next(0,60))),
+                new Wiadomosc("Wiadomosc10", new DateTime(rnd.Next(1, 2020), rnd.Next(1,12), rnd.Next(1,20), rnd.Next(1,24), rnd.Next(0,60), rnd.Next(0,60))),
+           
             };
             foreach (var item in wiadomoscsi)
             {
                 Console.WriteLine(item);
             }
-            var z = method(wiadomoscsi,"Wiadomosc1");
-            
+
+            var wyszukaniePoSlowie = WyszukaniePoSlowie(wiadomoscsi, "osc");
+            var wyszukaniePoDacie = WyszukaniePoDacie(wiadomoscsi, date1);
         }
 
-        private static bool method(List<Wiadomosc> a,string slowo)
+        private static bool WyszukaniePoSlowie(List<Wiadomosc> a, string slowo)
         {
+            int matchNumber = 0;
             for (int i = 0; i < a.Count; i++)
             {
-                if (a[i].Tresc == slowo)
+                if ((System.Text.RegularExpressions.Regex.IsMatch(a[i].Tresc, slowo)))
                 {
-                    Console.WriteLine("Slowo Znajleziono !");
-                    return true;
-                }
-                else
-                {
-                    Console.WriteLine("Nie znaleziono w liscie slowa");
-                    return false;
+                    matchNumber++;
+                    continue;
                 }
             }
 
-            return false;
+            Console.WriteLine("Znaleziono pasujacych: {0} do słowa: {1}!", matchNumber, slowo);
+            return true;
+        }
+
+        private static bool WyszukaniePoDacie(List<Wiadomosc> a, DateTime dateTime)
+        {
+            int matchNumber = 0;
+            for (int i = 0; i < a.Count; i++)
+            {
+                if ((System.Text.RegularExpressions.Regex.IsMatch(a[i].Czas.ToString(), dateTime.ToString())))
+                {
+                    matchNumber++;
+                    continue;
+                }
+            }
+
+            Console.WriteLine("Znaleziono pasujacych: {0} po dacie: {1}!", matchNumber, dateTime);
+            return true;
         }
     }
+}

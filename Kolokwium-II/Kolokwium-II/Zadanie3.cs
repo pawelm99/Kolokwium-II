@@ -8,20 +8,20 @@ namespace Zadanie3
         enum MyEnum
         {
             info,
-            warning, 
+            warning,
             error
         }
 
         interface ILoger
         {
-            public void methodZaloguj(string tresc,MyEnum myEnum);
+            public void methodZaloguj(string tresc, MyEnum myEnum);
         }
 
-        class LoggerKonsola : ILoger 
+        class LoggerKonsola : ILoger
         {
             public void methodZaloguj(string tresc, MyEnum myEnum)
             {
-                Console.WriteLine($"{DateTime.Now} {myEnum}: {"jaki blad"}");
+                Console.WriteLine($"{DateTime.Now} {myEnum} \"{tresc}\"");
             }
         }
 
@@ -29,23 +29,39 @@ namespace Zadanie3
         {
             public void methodZaloguj(string tresc, MyEnum myEnum)
             {
-                string path = Path.Combine(Environment.CurrentDirectory, DateTime.Now.Millisecond + "plik.txt");
-                if (!File.Exists(path))
+                string folderName = Environment.CurrentDirectory;
+                string pathFolder = Path.Combine(folderName, "Logger");
+                string path = Path.Combine(pathFolder, $"{myEnum}.txt");
+
+                if ((!File.Exists(path)) || (!Directory.Exists(pathFolder)))
                 {
-                    
+                    Directory.CreateDirectory(pathFolder);
                     using (StreamWriter sw = File.CreateText(path))
                     {
-                        sw.WriteLine($"{DateTime.Now} : {myEnum}");
-                        sw.WriteLine("Dziekujemy i zapraszamy ponownie");
-                    }	
+                        sw.WriteLine($"{DateTime.Now} : {myEnum} \"{tresc}\"");
+                    }
+                }
+                else
+                {
+                    using (StreamWriter sw = File.AppendText(path))
+                    {
+                        sw.WriteLine($"{DateTime.Now} : {myEnum} \"{tresc}\"");
+                    }
                 }
             }
         }
-        
-        static void Zadanie3(string[] args)
-        {
 
+        public void Zad3()
+        {
+            LoggerKonsola loggerKonsola = new LoggerKonsola();
+            loggerKonsola.methodZaloguj("Blad rozdzielacza YVC3", MyEnum.error);
+            loggerKonsola.methodZaloguj("Stara wersja systemu", MyEnum.info);
+            loggerKonsola.methodZaloguj("Prasa nie jest zaryglowana", MyEnum.warning);
+
+            LoggerPlik loggerPlik = new LoggerPlik();
+            loggerPlik.methodZaloguj("Blad rozdzielacza YVC3", MyEnum.error);
+            loggerPlik.methodZaloguj("Stara wersja systemu", MyEnum.info);
+            loggerPlik.methodZaloguj("Prasa nie jest zaryglowana", MyEnum.warning);
         }
     }
-    
 }

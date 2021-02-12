@@ -17,7 +17,7 @@ namespace Zadanie2
                 
                 for (int i = 0; i < listA.Count; i++)
                 {
-                    dictionary.Add(listA[0],listB[0]);
+                    dictionary.Add(listA[i],listB[i]);
                 }
 
                 return dictionary;
@@ -28,7 +28,8 @@ namespace Zadanie2
     }
     class Program
     {
-        static void Zadanie2(string[] args)
+       
+        public void Zad2()
         {
             List<int> list = new List<int>()
             {
@@ -41,7 +42,11 @@ namespace Zadanie2
             
             DictionaryBuilder<int,double> builder = new DictionaryBuilder<int, double>();
 
-            builder.BuildDictionary(list, listb);
+            var dictionary = builder.BuildDictionary(list, listb);
+            foreach (var item in dictionary)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
     
